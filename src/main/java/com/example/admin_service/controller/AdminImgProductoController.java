@@ -28,7 +28,7 @@ public class AdminImgProductoController {
   public String gestionar(@PathVariable Long productoId, Model modelo) {
 	  ProductoDTO producto = productoFeign.buscarPorId(productoId);
     modelo.addAttribute("producto", producto);
-    modelo.addAttribute("imagenes", imgProductoFeign.buscarPorId(productoId));
+    modelo.addAttribute("imagenes", imgProductoFeign.listarPorProducto(productoId));
     return "admin/productos/imagenes";
   }
 

@@ -33,6 +33,10 @@ public interface ImgProductoFeign {
 			@RequestParam String q,
 			@RequestParam int page,
 			@RequestParam int size);
+	
+	@GetMapping("/admin/productos/url")
+	Page<ImgProductoDTO> obtenerUrlPrincipal(Long id);
+
 
 	@GetMapping("/api/img-productos/{id}")
 	ImgProductoDTO buscarPorId(@PathVariable Long id);

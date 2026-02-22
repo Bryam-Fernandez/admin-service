@@ -1,43 +1,47 @@
 package com.example.admin_service.feign;
 
-import java.util.List;
-
+import com.example.admin_service.dto.CategoriaDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.admin_service.dto.CategoriaDTO;
+import java.util.List;
 
-@FeignClient(name = "producto-service", url = "http://localhost:8082")
+@FeignClient(name = "product-service", url = "http://localhost:8081")
 public interface CategoriaClient {
 
+    // LISTAR
     @GetMapping("/api/categorias")
+    List<CategoriaDTO> listar();
+
+    // LISTAR PAGINADO
+    @GetMapping("/api/categorias/paginado")
     Page<CategoriaDTO> listarPaginado(
-            @RequestParam int page,
-            @RequestParam int size);
+            @RequestParam("page") int page,
+            @RequestParam("size") int size);
 
+    // BUSCAR
     @GetMapping("/api/categorias/buscar")
-    Page<CategoriaDTO> buscarPorNombreORutaPaginado(
-            @RequestParam String q,
-            @RequestParam int page,
-            @RequestParam int size);
+    Page<CategoriaDTO> buscar(
+            @RequestParam("q") String q,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size);
 
+    // OBTENER POR ID
     @GetMapping("/api/categorias/{id}")
-    CategoriaDTO buscarPorId(@PathVariable Long id);
+    CategoriaDTO obtener(@PathVariable("id") Long id);
 
+    // CREAR
     @PostMapping("/api/categorias")
     CategoriaDTO crear(@RequestBody CategoriaDTO categoria);
 
+    // ACTUALIZAR
     @PutMapping("/api/categorias/{id}")
-    CategoriaDTO actualizar(@PathVariable Long id,
-                            @RequestBody CategoriaDTO categoria);
+    CategoriaDTO actualizar(
+            @PathVariable("id") Long id,
+            @RequestBody CategoriaDTO categoria);
 
+    // ELIMINAR
     @DeleteMapping("/api/categorias/{id}")
-    void eliminar(@PathVariable Long id);
+    void eliminar(@PathVariable("id") Long id);
 }

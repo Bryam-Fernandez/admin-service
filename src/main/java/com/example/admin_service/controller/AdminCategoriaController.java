@@ -31,7 +31,7 @@ public class AdminCategoriaController {
 
         var pagina = (q == null || q.isBlank())
                 ? categoriaClient.listarPaginado(page, size)
-                : categoriaClient.buscarPorNombreORutaPaginado(q, page, size);
+                : categoriaClient.buscar(q, page, size);
 
         modelo.addAttribute("pagina", pagina);
         modelo.addAttribute("q", q);
@@ -73,7 +73,7 @@ public class AdminCategoriaController {
                          RedirectAttributes attrs) {
 
         try {
-            CategoriaDTO categoria = categoriaClient.buscarPorId(id);
+            CategoriaDTO categoria = categoriaClient.obtener(id);
             modelo.addAttribute("categoria", categoria);
             modelo.addAttribute("titulo", "Editar categoría");
             return "admin/categorias/form";
